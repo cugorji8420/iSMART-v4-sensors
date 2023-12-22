@@ -1,0 +1,18 @@
+List of V4 sensor errors
+
+0 - No Errors. Unit functioning normally
+
+
+1x - Rain sensor null
+
+2x - Rain sensor output problem
+
+3x - Rain sensor malfunctioning
+
+
+x1 - Distance sensor null
+
+x2 - Distance sensor cycled but could not read
+
+x3 - Distance Output error
+

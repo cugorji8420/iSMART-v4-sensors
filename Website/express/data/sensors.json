@@ -1,0 +1,37 @@
+{
+    "sensors" : [
+        {"name":"v4_sensor 1",
+        "position":{"lng": -74.0272, "lat": 40.7445},
+        "id":"a43d1989-8f05-49c6-b6de-b987c91e9048",
+        "devEUI": "",
+        "appEUI": "",
+        "activationMethod": {},
+        "status": 1,
+        "profile": "",
+        "uplinks":[],
+        "last_connected": "2023-11-18T21:03:33"
+        },
+        {"name":"v4_sensor 2",
+        "position":{"lng": -75.0272, "lat": 41.7445},
+        "id":"a43d1989-8f05-49c323-b6de-b12387c91e9048",
+        "devEUI": "",
+        "appEUI": "",
+        "activationMethod": {},
+        "status": 0,
+        "profile": "",
+        "uplinks":[],
+        "last_connected": "2023-11-18T21:03:33"
+        },
+        {"name":"v4_sensor 3",
+        "position":{"lng": -72.0272, "lat": 41.6445},
+        "id":"a43dqwe89-8f05-49c323-b6de-b12387c91234er8",
+        "devEUI": "",
+        "appEUI": "",
+        "activationMethod": {},
+        "status": 2,
+        "profile": "",
+        "uplinks":[],
+        "last_connected": "2023-12-18T21:03:33"
+        }
+    ]
+}

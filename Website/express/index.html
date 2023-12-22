@@ -1,0 +1,120 @@
+<!doctype html>
+<!-- 
+
+--->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta charset="utf-8">
+<title>iSmart Labs Flood Sensors</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js"></script>
+<link href="styles.css" rel="stylesheet"/>
+<body>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['Work',     11],
+          ['Eat',      2],
+          ['Commute',  2],
+          ['Watch TV', 2],
+          ['Sleep',    7]
+        ]);
+
+        var options = {
+          title: 'My Daily Activities'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+
+    <script type="module" src="./index.js"></script>
+    <!-- Navbar -->
+    <div class="w3-top">
+    <div class="w3-bar w3-black w3-card">
+        <a href="#" class="w3-bar-item w3-button w3-padding-large w3-right" onclick="openNav()">HOME</a>  
+        <div class="w3-dropdown-content w3-bar-block w3-card-4">
+            <a href="#" class="w3-bar-item w3-button">Merchandise</a>
+            <a href="#" class="w3-bar-item w3-button">Extras</a>
+            <a href="#" class="w3-bar-item w3-button">Media</a>
+        </div>
+        </div>
+    </div>
+    </div>
+    <!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
+    <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+    <a href="#" class="w3-bar-item w3-button w3-padding-large" onclick="openNav()">DETAILS</a>
+    <a href="#tour" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">TOUR</a>
+    </div>
+
+    <!-- Page content -->
+    <div id="mySidenav" class="sidenav">
+        <h3 id="sensName" style="white-space: nowrap;padding: 12px;">Sensor Name</h3>
+        <div class="box">
+            <div class="tab">
+                <button id="tab1-btn" class="tablinks active" onclick="openTab('tab1')" >Distance Data</button>
+                <button id="tab2-btn" class="tablinks" onclick="openTab('tab2')" style="border-left: 1px solid #ccc;">Rain Data</button>
+                <button id="tab3-btn" class="tablinks" onclick="openTab('tab3')" style="border-left: 1px solid #ccc;">Voltage Readings</button>
+              </div>
+              
+              <div id="tab1" class="tabcontent" style="display: block;">
+                <div id="piechart" style="width: 400px;"></div>
+                <p>London is the capital city of England.</p>
+              </div>
+              
+              <div id="tab2" class="tabcontent">
+                <div id="chart_div" style="width: 400px;"></div>
+                <p>Paris is the capital of France.</p> 
+              </div>
+              
+              <div id="tab3" class="tabcontent">
+                <h3>Tokyo</h3>
+                <p>Tokyo is the capital of Japan.</p>
+              </div>
+
+            <script>
+                function openTab(tab) {
+                  var i, tabcontent, tablinks;
+                  tabcontent = document.getElementsByClassName("tabcontent");
+                  for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                  }
+                  tablinks = document.getElementsByClassName("tablinks");
+                  for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                  }
+                  document.getElementById(tab).style.display = "block";
+                  document.getElementById(tab+"-btn").className += " active";
+                }
+            </script>
+        </div>
+        <div class="l-nav">
+        <h5>First Installed</h5>
+        <p id="instDate" style="color: #5d5d5d;">2023-09-10</p>
+        <p id="instTime" style="color: #5d5d5d;">12:03PM</p>
+        <div style="height: 5px;"></div>
+        <h5>Last Connected</h5>
+        <p id="heardDate" style="color: #5d5d5d;">2023-12-18</p>
+        <p id="heardTime" style="color: #5d5d5d;">8:03PM</p>
+        </div> 
+        
+    </div>
+
+    <div class="w3-content" style="max-width:2000px;height:100%;margin-top:46px">
+        <div class="w3-container w3-padding-64 w3-center w3-opacity w3-light-grey w3-xlarge" id="map"></div>
+    </div>
+
+    </body>
+</html>
