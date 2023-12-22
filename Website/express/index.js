@@ -6,7 +6,7 @@ const map = new mapboxgl.Map({
     container: 'map', // container ID
     style: secrets.map.style, // style URL
     center: [-74.02, 40.75], // starting position [lng, lat]
-    zoom: 10 // starting zoom
+    zoom: 14 // starting zoom
 });
 
 dict.markers = [];
@@ -32,6 +32,10 @@ map.on('load', async () => {
                 }]
         });
 
+        fetch('./data/sensors.json')
+            .then((response) => response.json())
+            .then((json) => dict.sensors = json.sensors);
+
         //update all markers
         updateMarkers();
     }, 10);
@@ -40,7 +44,10 @@ map.on('load', async () => {
 function addMarker(item) {
     // create a HTML element for each feature
    const elem = document.createElement('div');
-   elem.className = 'marker';
+   
+   elem.setAttribute("class",
+   "el");
+   //elem.className = 'marker';
     // make a marker for each feature and add to the map
    var marker = new mapboxgl.Marker(elem);
    marker.setLngLat(item.position).addTo(map);
@@ -59,11 +66,13 @@ function addPopup(marker) {
         var sensor = findByID(popup.marker.info);
         var status = (sensor.status < 1) ? "Inactive" : "Active";
         popup.setHTML('<div class="sensor-popup"><h5><b>' + sensor.name + '</b></h5><p><b>Status:</b> ' + status + '</p><p><b>Location:</b> ' + sensor.position.lat + ', ' + sensor.position.lng + '</p></div>');
-        document.getElementById("mySidenav").style.width = "450px";
+        document.getElementById("mySidenav").style.width = "480px";
+        eventSelection(sensor.id, 'open');
     })
 
     popup.on('close', () => {
-        document.getElementById("mySidenav").style.width = "0px";
+        var sensor = findByID(popup.marker.info);
+        eventSelection(sensor.id, 'close');
     })
 
     return popup;
@@ -82,12 +91,12 @@ function updateMarkers() {
                 stingVal = "#DCDCDC";
                 break;
             case 1:
-                stringVal = "#6495ED";
-                stingVal = "#A4C0F4";
+                stringVal = "#2b95fe";
+                stingVal = "#b3e6ff";
                 break;
             case 2:
-                stringVal = "#F08080";
-                stingVal = "#FFB6C1";
+                stringVal = "#ff4646";
+                stingVal = "#ffabab";
                 break;
             default:
                 stringVal = "green";
@@ -107,51 +116,177 @@ function findByID(id){
     }
 }
 
-
-google.charts.load('current', {packages: ['corechart', 'line']});
-google.charts.setOnLoadCallback(drawAxisTickColors);
-
-function drawAxisTickColors() {
-      var data = new google.visualization.DataTable();
-      data.addColumn('number', 'X');
-      data.addColumn('number', 'Acc');
-      data.addColumn('number', 'Event Acc');
-
-      data.addRows([
-        [0, 0, 0],    [1, 10, 5],   [2, 23, 15],  [3, 17, 9],   [4, 18, 10],  [5, 9, 5],
-        [6, 11, 3],   [7, 27, 19],  [8, 33, 25],  [9, 40, 32],  [10, 32, 24], [11, 35, 27],
-        [12, 30, 22], [13, 40, 32], [14, 42, 34], [15, 47, 39], [16, 44, 36], [17, 48, 40],
-        [18, 52, 44], [19, 54, 46], [20, 42, 34], [21, 55, 47], [22, 56, 48], [23, 57, 49],
-        [24, 60, 52], [25, 50, 42], [26, 52, 44], [27, 51, 43], [28, 49, 41], [29, 53, 45],
-        [30, 55, 47], [31, 60, 52], [32, 61, 53], [33, 59, 51], [34, 62, 54], [35, 65, 57],
-        [36, 62, 54], [37, 58, 50], [38, 55, 47], [39, 61, 53], [40, 64, 56], [41, 65, 57],
-        [42, 63, 55], [43, 66, 58], [44, 67, 59], [45, 69, 61], [46, 69, 61], [47, 70, 62],
-        [48, 72, 64], [49, 68, 60], [50, 66, 58], [51, 65, 57], [52, 67, 59], [53, 70, 62],
-        [54, 71, 63], [55, 72, 64], [56, 73, 65], [57, 75, 67], [58, 70, 62], [59, 68, 60],
-        [60, 64, 56], [61, 60, 52], [62, 65, 57], [63, 67, 59], [64, 68, 60], [65, 69, 61],
-        [66, 70, 62], [67, 72, 64], [68, 75, 67], [69, 80, 72]
-      ]);
-
-      var options = {
-        hAxis: {
-          title: 'Time',
-          textStyle: {
-            color: '#01579b',
-            fontSize: 20,
-            fontName: 'Arial',
-            bold: true,
-            italic: true
-          },
-          titleTextStyle: {
-            color: '#01579b',
-            fontSize: 16,
-            fontName: 'Arial',
-            bold: false,
-            italic: true
-          }
-        },
-        colors: ['#a52714', '#097138']
-      };
-      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-      chart.draw(data, options);
+function findUplinkData(sensorID, dataKey, reference, interval){
+    let sensor = {};
+    for (var sens of dict.sensors){
+        if (sens.id == sensorID){
+            sensor = sens;
+            break;
+        }
     }
+
+    if(sensor.hasOwnProperty('uplinks')){
+        for (var data of sensor.uplinks){
+            console.log([(data.time > reference-interval), (reference >= data.time), reference-interval, data.time, reference])
+            if (reference-interval < data.time && data.time <= reference){
+                switch(dataKey){
+                    case 'volt':
+                        return data.voltage;
+                    case 'dist':
+                        return data.distance;
+                    case 'acc':
+                        return data.acc;
+                    case 'ev_acc':
+                        return data.ev_acc;
+                    case 'tot_acc':
+                        return data.tot_acc;
+                    case 'r_int':
+                        return data.r_int;  
+                    default:
+                        console.error("Unrecognized dataKey '" + dataKey +"'")
+                        break;
+                }
+            }
+        }
+    }
+    return null;
+}
+
+function eventSelection(sensorId, cmd){
+    if(cmd == 'open'){
+        document.getElementById("mySidenav").style.width = "480px";
+        document.getElementById("sensName").innerHTML = findByID(sensorId).name;
+        setCharts(sensorId);
+    }
+    else{
+        document.getElementById("mySidenav").style.width = "0px";
+        clearCharts();
+    }
+}
+
+
+var charter = {
+    charts:[],
+    sensorId:"",
+    intervalIds:[],
+    interVal:60
+};
+
+function clearCharts(){
+    charter.charts = [];
+    charter.sensorId = "";
+    console.log(charter.intervalIds);
+    for(const [key, value] of Object.entries(charter.intervalIds)){
+        clearInterval(value.intV);
+    }
+    charter.intervalIds = [];
+}
+
+function setCharts(id){
+    clearCharts();
+    charter.sensorId = id;
+    var arr = [
+        {
+            id:'volt-chart',
+            min: 0,
+            max: 5,
+            yAxis: 'Voltage',
+            plot:'Line',
+            interval: 0.5,
+            key: 'volt'
+        },
+        {
+            id:'rain-chart',
+            min: 0,
+            max: 50,
+            yAxis: 'Rain (mm)',
+            plot:'Scatter',
+            interval: 10,
+            key: 'acc'
+        },
+        {
+            id:'dist-chart',
+            min: 300,
+            max: 5000,
+            yAxis: 'Distance (mm) to Ground',
+            plot:'Scatter',
+            interval: 500,
+            key: 'dist'
+            
+        }
+    ];
+    for (var x of arr){
+        setChart(x);
+    }
+}
+
+function setupChart(spec){
+    var set = [];
+    var i = 0;
+    var span = 3600/charter.interVal;
+    var presection = Date.now();
+    for (i = 0; i <= span; i++) {
+        var section = presection-(i*charter.interVal*1000);
+        set[(span-1)-i] = { x: section, y: findUplinkData(charter.sensorId, spec.key, section, charter.interVal*1000)};
+    }
+
+    // Creating real time chart
+    var chartEr = new ej.charts.Chart({
+        series: [{
+            type: spec.plot,
+            dataSource: set,
+            xName: "x",
+            yName: "y",
+            animation: { enable: false },
+        }],
+        primaryXAxis: {
+            valueType: 'DateTime',
+            title: 'Time',
+            interval: 10,
+            intervalType: 'Minutes',
+        },
+        primaryYAxis: {
+            valueType: 'Double',
+            // Numeric axis range
+            minimum: spec.min,
+            maximum: spec.max,
+            interval: spec.interval,
+            title: spec.yAxis,
+        },
+        tooltip: {enable: true},
+        width: '400', 
+        height: '350'
+    });
+    chartEr.appendTo('#'+spec.id);
+
+    return {chart:chartEr, data:set};
+}
+
+
+function setChart(spec){
+// Creating live data
+var setUp = setupChart(spec);
+console.log(setUp);
+charter.intervalIds[spec.id] = {
+    chart:setUp.chart,
+    dataSeries:setUp.data,
+    date:Date.now(),
+    max:spec.max,
+    intV:parseInt(setInterval(function() {
+    
+    var value = 0;
+    if (document.getElementById(spec.id) === null) {
+        clearInterval(charter.intervalIds[spec.id].intV);
+    } else {
+      value = Math.random() * charter.intervalIds[spec.id].max;
+      var section = Date.now();
+      charter.intervalIds[spec.id].dataSeries.push({ x: section, y: findUplinkData(charter.sensorId, spec.key, section, charter.interVal*1000)});
+      charter.intervalIds[spec.id].date = Date.now();
+      charter.intervalIds[spec.id].dataSeries.shift();
+      charter.intervalIds[spec.id].chart.series[0].dataSource = setUp.data;
+      charter.intervalIds[spec.id].chart.refresh();
+    }
+  }, charter.interVal*1000).toString()
+)};
+
+}

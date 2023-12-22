@@ -1,37 +1,202 @@
 {
-    "sensors" : [
-        {"name":"v4_sensor 1",
-        "position":{"lng": -74.0272, "lat": 40.7445},
-        "id":"a43d1989-8f05-49c6-b6de-b987c91e9048",
-        "devEUI": "",
-        "appEUI": "",
-        "activationMethod": {},
-        "status": 1,
-        "profile": "",
-        "uplinks":[],
-        "last_connected": "2023-11-18T21:03:33"
-        },
-        {"name":"v4_sensor 2",
-        "position":{"lng": -75.0272, "lat": 41.7445},
-        "id":"a43d1989-8f05-49c323-b6de-b12387c91e9048",
-        "devEUI": "",
-        "appEUI": "",
-        "activationMethod": {},
-        "status": 0,
-        "profile": "",
-        "uplinks":[],
-        "last_connected": "2023-11-18T21:03:33"
-        },
-        {"name":"v4_sensor 3",
-        "position":{"lng": -72.0272, "lat": 41.6445},
-        "id":"a43dqwe89-8f05-49c323-b6de-b12387c91234er8",
-        "devEUI": "",
-        "appEUI": "",
-        "activationMethod": {},
-        "status": 2,
-        "profile": "",
-        "uplinks":[],
-        "last_connected": "2023-12-18T21:03:33"
-        }
-    ]
+	"sensors": [
+		
+		{
+			"name": "v4_sensor 2",
+			"position": {
+				"lng": -74.03678,
+				"lat": 40.74475
+			},
+			"id": "15d18db5-6c4b-4d63-991f-266f20da99a6",
+			"devEUI": "6081F98E63318756",
+			"appEUI": "6081F92E01720F48",
+			"activationMethod": "otaa",
+			"status": 0,
+			"profile": "",
+			"uplinks": [
+				{
+					"err": "01",
+					"voltage": "2.7",
+					"distance": "915",
+					"acc": "0.001",
+					"ev_acc": "0.005",
+					"tot_acc": "34.01",
+					"r_int": "0.001",
+					"time": 1703273214800
+				},
+				{
+					"err": "01",
+					"voltage": "2.7",
+					"distance": "915",
+					"acc": "0.001",
+					"ev_acc": "0.005",
+					"tot_acc": "34.01",
+					"r_int": "0.001",
+					"time": 1703273222259
+				}
+			],
+			"last_connected": 1703273222259
+		},
+		{
+			"name": "v4_sensor 1",
+			"position": {
+				"lng": -74.0272,
+				"lat": 40.7445
+			},
+			"id": "a43d1989-8f05-49c6-b6de-b987c91e9048",
+			"devEUI": "6081F98E63318756",
+			"appEUI": "6081F92E01720F48",
+			"activationMethod": "otaa",
+			"status": 1,
+			"profile": "",
+			"uplinks": [
+				{
+					"err": "01",
+					"voltage": "2.7",
+					"distance": "915",
+					"acc": "0.001",
+					"ev_acc": "0.005",
+					"tot_acc": "34.01",
+					"r_int": "0.001",
+					"time": 1703279009220
+				},
+				{
+					"err": "01",
+					"voltage": "2.7",
+					"distance": "915",
+					"acc": "0.001",
+					"ev_acc": "0.005",
+					"tot_acc": "34.01",
+					"r_int": "0.001",
+					"time": 1703279137182
+				},
+				{
+					"err": "01",
+					"voltage": "2.7",
+					"distance": "915",
+					"acc": "0.001",
+					"ev_acc": "0.005",
+					"tot_acc": "34.01",
+					"r_int": "0.001",
+					"time": 1703279138481
+				},
+				{
+					"err": "01",
+					"voltage": "2.7",
+					"distance": "915",
+					"acc": "0.001",
+					"ev_acc": "0.005",
+					"tot_acc": "34.01",
+					"r_int": "0.001",
+					"time": 1703279139448
+				},
+				{
+					"err": "01",
+					"voltage": "2.7",
+					"distance": "915",
+					"acc": "0.001",
+					"ev_acc": "0.005",
+					"tot_acc": "34.01",
+					"r_int": "0.001",
+					"time": 1703279140494
+				},
+				{
+					"err": "01",
+					"voltage": "2.7",
+					"distance": "915",
+					"acc": "0.001",
+					"ev_acc": "0.005",
+					"tot_acc": "34.01",
+					"r_int": "0.001",
+					"time": 1703279141828
+				},
+				{
+					"err": "01",
+					"voltage": "2.7",
+					"distance": "915",
+					"acc": "0.001",
+					"ev_acc": "0.005",
+					"tot_acc": "34.01",
+					"r_int": "0.001",
+					"time": 1703279142949
+				},
+				{
+					"err": "01",
+					"voltage": "2.7",
+					"distance": "915",
+					"acc": "0.001",
+					"ev_acc": "0.005",
+					"tot_acc": "34.01",
+					"r_int": "0.001",
+					"time": 1703279143935
+				},
+				{
+					"err": "01",
+					"voltage": "2.7",
+					"distance": "915",
+					"acc": "0.001",
+					"ev_acc": "0.005",
+					"tot_acc": "34.01",
+					"r_int": "0.001",
+					"time": 1703279144943
+				},
+				{
+					"err": "01",
+					"voltage": "2.7",
+					"distance": "915",
+					"acc": "0.001",
+					"ev_acc": "0.005",
+					"tot_acc": "34.01",
+					"r_int": "0.001",
+					"time": 1703279145873
+				},
+				{
+					"err": "01",
+					"voltage": "2.7",
+					"distance": "915",
+					"acc": "0.001",
+					"ev_acc": "0.005",
+					"tot_acc": "34.01",
+					"r_int": "0.001",
+					"time": 1703279656580
+				},
+				{
+					"err": "01",
+					"voltage": "2.7",
+					"distance": "915",
+					"acc": "0.001",
+					"ev_acc": "0.005",
+					"tot_acc": "34.01",
+					"r_int": "0.001",
+					"time": 1703279659817
+				},
+				{
+					"err": "01",
+					"voltage": "2.7",
+					"distance": "915",
+					"acc": "0.001",
+					"ev_acc": "0.005",
+					"tot_acc": "34.01",
+					"r_int": "0.001",
+					"time": 1703279760588
+				}
+			],
+			"last_connected": 1703279760588
+		},
+		{
+			"name": "v3_sensor 1",
+			"position": {
+				"lng": -74.02671,
+				"lat": 40.7354509
+			},
+			"id": "8a799ad1-687b-4acb-8829-0dfdaf7f269f",
+			"devEUI": "6081F9212ED108D4",
+			"appEUI": "6081F92E01720F48",
+			"activationMethod": "otaa",
+			"status": 0,
+			"profile": "",
+			"uplinks": [],
+			"last_connected": 1703259825349
+		}
+	]
 }

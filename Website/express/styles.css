@@ -21,12 +21,11 @@ body {font-family: "Lato", sans-serif}
   background-color: #ffffff;
   overflow-x: hidden;
   transition: 0.5s;
-  padding-top: 60px;
+  padding-top: 20px;
   font-family: "Poppins", sans-serif;
 }
 
 .sidenav a {
-  padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;
   color: #818181;
@@ -54,11 +53,18 @@ body {font-family: "Lato", sans-serif}
   .sidenav a {font-size: 18px;}
 }
 
+.masked {
+  width: 100px;
+  height: 100px;
+  background-color: #8cffa0;
+  -webkit-mask-image: url(marker.svg);
+  mask-image: url(marker.svg);
+}
+
 .marker {
-  background-image: url('/images/marker.svg');
-  animation-name: color;
-  animation-duration: 1s;
-  animation-iteration-count: infinite;
+  -webkit-mask-image: url('/marker.svg');
+  mask-image: url('/marker.svg');
+  
   background-size: cover;
   width: 50px;
   height: 50px;
@@ -66,15 +72,36 @@ body {font-family: "Lato", sans-serif}
   cursor: pointer;
 }
 
+.el {
+  width: 50px;
+  height: 50px;
+  padding: 1rem;
+
+  animation-name: color;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+
+  background-image: url(/images/marker.svg);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  mask-image: url(/images/marker-mask.svg);
+  -webkit-mask-image: url(/images/marker-mask.svg);
+  mask-size: 50px;
+  mask-repeat: no-repeat;
+  mask-position: center;
+}
+
 @keyframes color {
   0% {
-    background-color: var(--sens-bck);
-  }
-  50% {
     background-color: var(--sens-col);
   }
-  100% {
+  50% {
     background-color: var(--sens-bck);
+  }
+  100% {
+    background-color: var(--sens-col);
   }
 }
 
@@ -99,7 +126,7 @@ h3, .h3 {
 .box{ 
   width: 420px; 
   align-self: center;
-  height: 320px; 
+  height: 440px; 
   padding: 10px;
 } 
 
@@ -138,5 +165,5 @@ h3, .h3 {
   
   border-top: none;
   background-color: #ffffff;
-  height: 300px; 
+  height: 400px; 
 }
