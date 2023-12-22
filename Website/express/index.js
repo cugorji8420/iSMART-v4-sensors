@@ -1,12 +1,25 @@
 import secrets from './secrets.json' assert { type: 'json' };
 import dict from './data/sensors.json' assert { type: 'json' };
 
+
+document.querySelector('#tab2-sub1-btn').addEventListener('click', () => {
+    setSubTab('acc');
+});
+
+document.querySelector('#tab2-sub2-btn').addEventListener('click', () => {
+    setSubTab('ev_acc');
+});
+
+document.querySelector('#tab2-sub3-btn').addEventListener('click', () => {
+    setSubTab('r_int');
+});
+
 mapboxgl.accessToken = secrets.map.accessToken;
 const map = new mapboxgl.Map({
     container: 'map', // container ID
     style: secrets.map.style, // style URL
     center: [-74.02, 40.75], // starting position [lng, lat]
-    zoom: 14 // starting zoom
+    zoom: 13 // starting zoom
 });
 
 dict.markers = [];
@@ -92,7 +105,7 @@ function updateMarkers() {
                 break;
             case 1:
                 stringVal = "#2b95fe";
-                stingVal = "#b3e6ff";
+                stingVal = "#004dad";
                 break;
             case 2:
                 stringVal = "#ff4646";
@@ -154,8 +167,23 @@ function findUplinkData(sensorID, dataKey, reference, interval){
 
 function eventSelection(sensorId, cmd){
     if(cmd == 'open'){
+        const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+        const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+        const d = new Date();
+        let day = weekday[d.getDay()];
+
+        const f = new Date(findByID(sensorId).date_activated);
+        var fst = weekday[f.getDay()] + ", " + month[f.getMonth()] + " " + f.getDate().toString() + ", " + f.getFullYear().toString();
+        
+        const l = new Date(findByID(sensorId).last_connected);
+        var lst = weekday[l.getDay()] + ", " + month[l.getMonth()] + " " + l.getDate().toString() + ", " + l.getFullYear().toString();
+
         document.getElementById("mySidenav").style.width = "480px";
         document.getElementById("sensName").innerHTML = findByID(sensorId).name;
+        document.getElementById("instDate").innerHTML = fst;
+        document.getElementById("heardDate").innerHTML = lst;
+        document.getElementById("heardTime").innerHTML = l.toLocaleTimeString();
         setCharts(sensorId);
     }
     else{
@@ -166,14 +194,12 @@ function eventSelection(sensorId, cmd){
 
 
 var charter = {
-    charts:[],
     sensorId:"",
     intervalIds:[],
     interVal:60
 };
 
-function clearCharts(){
-    charter.charts = [];
+function clearCharts(){ 
     charter.sensorId = "";
     console.log(charter.intervalIds);
     for(const [key, value] of Object.entries(charter.intervalIds)){
@@ -191,7 +217,7 @@ function setCharts(id){
             min: 0,
             max: 5,
             yAxis: 'Voltage',
-            plot:'Line',
+            plot:'Scatter',
             interval: 0.5,
             key: 'volt'
         },
@@ -199,7 +225,7 @@ function setCharts(id){
             id:'rain-chart',
             min: 0,
             max: 50,
-            yAxis: 'Rain (mm)',
+            yAxis: "[acc] Accumulation (mm)",
             plot:'Scatter',
             interval: 10,
             key: 'acc'
@@ -227,7 +253,7 @@ function setupChart(spec){
     var presection = Date.now();
     for (i = 0; i <= span; i++) {
         var section = presection-(i*charter.interVal*1000);
-        set[(span-1)-i] = { x: section, y: findUplinkData(charter.sensorId, spec.key, section, charter.interVal*1000)};
+        set[(span-1)-i] = { x: new Date(section), y: findUplinkData(charter.sensorId, spec.key, section, charter.interVal*1000)};
     }
 
     // Creating real time chart
@@ -244,6 +270,7 @@ function setupChart(spec){
             title: 'Time',
             interval: 10,
             intervalType: 'Minutes',
+            labelFormat: "h:m a"
         },
         primaryYAxis: {
             valueType: 'Double',
@@ -255,7 +282,7 @@ function setupChart(spec){
         },
         tooltip: {enable: true},
         width: '400', 
-        height: '350'
+        height: '340'
     });
     chartEr.appendTo('#'+spec.id);
 
@@ -280,7 +307,7 @@ charter.intervalIds[spec.id] = {
     } else {
       value = Math.random() * charter.intervalIds[spec.id].max;
       var section = Date.now();
-      charter.intervalIds[spec.id].dataSeries.push({ x: section, y: findUplinkData(charter.sensorId, spec.key, section, charter.interVal*1000)});
+      charter.intervalIds[spec.id].dataSeries.push({ x: new Date(section), y: findUplinkData(charter.sensorId, spec.key, section, charter.interVal*1000)});
       charter.intervalIds[spec.id].date = Date.now();
       charter.intervalIds[spec.id].dataSeries.shift();
       charter.intervalIds[spec.id].chart.series[0].dataSource = setUp.data;
@@ -289,4 +316,37 @@ charter.intervalIds[spec.id] = {
   }, charter.interVal*1000).toString()
 )};
 
+}
+
+
+function setSubTab(tag){
+    clearInterval(charter.intervalIds['rain-chart'].intV);
+    var label = "";
+    switch(tag){
+        case 'acc':
+            label = "[acc] Accumulation (mm)";
+            break;
+        case 'ev_acc':
+            label = "[ev_acc] Event Accumulation (mm)";
+            break;
+        case 'tot_acc':
+            label = "[tot_acc] Total Accumulation (mm)";
+            break;
+        case 'r_int':
+            label = "[r_int] RPH (mm)";
+            break; 
+        default:
+            console.error("Unrecognized tag '" + tag +"'")
+            break;
+    }
+    var x = {
+      id:'rain-chart',
+      min: 0,
+      max: 50,
+      yAxis: label,
+      plot:'Scatter',
+      interval: 10,
+      key: tag
+    };
+    setChart(x);
 }

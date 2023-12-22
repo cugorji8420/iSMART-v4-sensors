@@ -1,6 +1,5 @@
 {
 	"sensors": [
-		
 		{
 			"name": "v4_sensor 2",
 			"position": {
@@ -35,7 +34,8 @@
 					"time": 1703273222259
 				}
 			],
-			"last_connected": 1703273222259
+			"date_activated": 1692316800000,
+			"last_connected": 1700179200000
 		},
 		{
 			"name": "v4_sensor 1",
@@ -179,9 +179,70 @@
 					"tot_acc": "34.01",
 					"r_int": "0.001",
 					"time": 1703279760588
+				},
+				{
+					"err": "01",
+					"voltage": "2.7",
+					"distance": "915",
+					"acc": "0.001",
+					"ev_acc": "0.005",
+					"tot_acc": "34.01",
+					"r_int": "0.001",
+					"time": 1703283705035
+				},
+				{
+					"err": "01",
+					"voltage": "2.7",
+					"distance": "915",
+					"acc": "0.001",
+					"ev_acc": "0.005",
+					"tot_acc": "34.01",
+					"r_int": "0.002",
+					"time": 1703283714597
+				},
+				{
+					"err": "01",
+					"voltage": "2.7",
+					"distance": "915",
+					"acc": "0.031",
+					"ev_acc": "0.005",
+					"tot_acc": "34.01",
+					"r_int": "0.002",
+					"time": 1703283719059
+				},
+				{
+					"err": "01",
+					"voltage": "2.7",
+					"distance": "915",
+					"acc": "0.031",
+					"ev_acc": "0.025",
+					"tot_acc": "34.01",
+					"r_int": "0.002",
+					"time": 1703283722949
+				},
+				{
+					"err": "01",
+					"voltage": "2.7",
+					"distance": "925",
+					"acc": "0.031",
+					"ev_acc": "0.025",
+					"tot_acc": "34.01",
+					"r_int": "0.002",
+					"time": 1703283731209
+				},
+				{
+					"err": "01",
+					"voltage": "2.7",
+					"distance": "1125",
+					"acc": "0.031",
+					"ev_acc": "0.025",
+					"tot_acc": "34.01",
+					"r_int": "0.002",
+					"time": 1703283735020
 				}
 			],
-			"last_connected": 1703279760588
+			"date_activated": 1686096000000,
+			"last_connected": 1703283735020
 		},
 		{
 			"name": "v3_sensor 1",
@@ -196,7 +257,8 @@
 			"status": 0,
 			"profile": "",
 			"uplinks": [],
-			"last_connected": 1703259825349
+			"date_activated": 1700438400000,
+			"last_connected": 1700438400000
 		}
 	]
 }

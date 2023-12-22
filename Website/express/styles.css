@@ -21,7 +21,7 @@ body {font-family: "Lato", sans-serif}
   background-color: #ffffff;
   overflow-x: hidden;
   transition: 0.5s;
-  padding-top: 20px;
+  padding-top: 8px;
   font-family: "Poppins", sans-serif;
 }
 
@@ -124,9 +124,9 @@ h3, .h3 {
 
 
 .box{ 
-  width: 420px; 
+  width: 427px; 
   align-self: center;
-  height: 440px; 
+  height: 470px; 
   padding: 10px;
 } 
 
@@ -157,6 +157,28 @@ h3, .h3 {
 .tab button.active {
   background-color: #ccc;
 }
+
+.sub-tab {
+  padding: 7px;
+}
+
+.sub-tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 5px;
+  margin-left: 10px;
+  transition: 0.3s;
+  font-size: 14px;
+  background-color: #d7f3ff;
+}
+
+.sub-tab button:hover {
+  background-color: #519fff;
+}
+
 
 /* Style the tab content */
 .tabcontent {
