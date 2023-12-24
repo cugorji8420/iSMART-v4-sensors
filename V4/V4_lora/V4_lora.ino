@@ -1,9 +1,20 @@
 #include "V4_lora.h"
 senState sensors;
 confState conf;
+#ifdef __asr650x__
+#include "innerWdt.h"
+#endif
 
+///Definitions needed for running
 static TimerEvent_t wakeUpBoard;
 uint8_t lowpower=0;
+#ifdef __asr650x__
+#define MAX_FEEDTIME 2800// ms
+#else
+#define MAX_FEEDTIME 24000// ms
+#endif
+bool autoFeed = true;
+///--------------------------------
 
 void onSleep(int timetillwakeup)
 {
@@ -23,6 +34,7 @@ void onWakeUp()
 void setup(){
 	//serial init
   Serial.begin(115200);
+  innerWdtEnable(autoFeed);
 
   conf.conn = 0;
   conf.attempts = 6;
