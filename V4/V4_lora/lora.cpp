@@ -80,6 +80,7 @@ void lora_loop(confState* conf, senState* data){
       bool requestack=counter<5?true:false;
       if (LoRaWAN.send(DATA_LEN, payload, 1, requestack)) {
         Serial.println("Send OK");
+        delay(100);
       } else {
       Serial.println("Send FAILED");
     }

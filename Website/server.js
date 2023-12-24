@@ -1,19 +1,19 @@
+const secrets = require('./express/secrets.json');
 const http = require('http');
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-const secrets = require('./express/secrets.json');
+const fetch = require("node-fetch");
 
 let Application = { 
     sensorConfig:{},
     heliumHeader:{}
 }
 
-Application.heliumHeader = new Headers({
+Application.heliumHeader = new fetch.Headers({
     "key": secrets.helium.key,
 });
 Application.sensorConfig.maxUplinks = 20;
-
 
 async function getDevices() {
     const response = await fetch("https://console.helium.com/api/v1/devices", {headers:Application.heliumHeader});
@@ -56,7 +56,7 @@ app.post('/uplink', function(request,response){
 function pushUplink(sensorID, payload, when){
     const fileName = './express/data/sensors.json';
     fs.readFile(fileName, 'utf8', function(err, file){ 
-        data = JSON.parse(file);
+        var data = JSON.parse(file);
         payload.time = when;
         for(var sensor of data.sensors){
             if (sensor.id == sensorID){
