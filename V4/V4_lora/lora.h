@@ -4,8 +4,14 @@
 #include "mcu_functions.h"
 #include "secrets.h"
 
+/*
+ * Packet size definition.
+ */
 #define DATA_LEN 14
 
+/*
+ * Function definitions for lora.cpp.
+ */
 static void wakeUp();
 static void lowPowerSleep(uint32_t sleeptime);
 void lora_setup();

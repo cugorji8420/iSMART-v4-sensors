@@ -1,27 +1,34 @@
 #include "lora.h"
 
 /*
- * set LoraWan_RGB to Active,the RGB active in loraWan
+ * Definitions for loraWan based on the dev-board's flashed RGB
  * RGB red means sending;
  * RGB purple means joined done;
  * RGB blue means RxWindow1;
  * RGB yellow means RxWindow2;
  * RGB green means received done;
  */
-uint16_t userChannelsMask[6]={ 0xFF00,0x0000,0x0000,0x0000,0x0000,0x0000 };
+
+///Channel Mask 7 [DO NOT CHANGE WITHOUT NETWORK KNOWLEDGE]
+uint16_t userChannelsMask[6]= { 0xFF00,0x0000,0x0000,0x0000,0x0000,0x0000 };
 static uint8_t counter=0;
 
 ///////////////////////////////////////////////////
-//Some utilities for going into low power mode
+
+/*
+ * Description: Utilities for going into low power mode
+ * All Functions Return: void.
+ */
+
 TimerEvent_t sleepTimer;
 //Records whether our sleep/low power timer expired
 bool sleepTimerExpired;
-
+//Function for board wake
 static void wakeUp()
 {
   sleepTimerExpired=true;
 }
-
+//Function for board sleep
 static void lowPowerSleep(uint32_t sleeptime)
 {
   sleepTimerExpired=false;
@@ -33,15 +40,21 @@ static void lowPowerSleep(uint32_t sleeptime)
   while (!sleepTimerExpired) lowPowerHandler();
   TimerStop( &sleepTimer );
 }
-
 ///////////////////////////////////////////////////
+/*
+ * Description: Sets up lora transmission on region frequency.
+ * Returns: void.
+ */
 void lora_setup() {
   LoRaWAN.begin(LORAWAN_CLASS, ACTIVE_REGION);
   //Enable DR 1
   LoRaWAN.setFixedDR(1);
 }
 
-
+/*
+ * Description: Takes in sleep seconds. Attempts to join the network. Sleeps board for sleep seconds if join fails.
+ * Returns: int connection status.
+ */
 int join_loop(int fsleep){
   while (1) {
     Serial.println("Joining...");
@@ -56,8 +69,11 @@ int join_loop(int fsleep){
     }
   }
 }
-
-///////////////////////////////////////////////////
+////////////////////////////////////////////////////
+/*
+ * Description: Main lora loop. Handles connection status and data sending.
+ * Returns: void.
+ */
 void lora_loop(confState* conf, senState* data){
   uint8_t* payload = (uint8_t*)malloc(sizeof(uint8_t) * DATA_LEN);
   switch(conf->conn){
@@ -88,7 +104,10 @@ void lora_loop(confState* conf, senState* data){
   free(payload);
 }
 ///////////////////////////////////////////////////
-//Example of handling downlink data
+/*
+ * Description: Handles any downlinks from the network. 
+ * Returns: void.
+ */
 void downLinkDataHandle(McpsIndication_t *mcpsIndication){
   Serial.printf("Received downlink: %s, RXSIZE %d, PORT %d, DATA: ", mcpsIndication->RxSlot?"RXWIN2":"RXWIN1",mcpsIndication->BufferSize,mcpsIndication->Port);
   for(uint8_t i=0;i<mcpsIndication->BufferSize;i++) {
