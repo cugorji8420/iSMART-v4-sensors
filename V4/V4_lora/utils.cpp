@@ -32,7 +32,7 @@ uint8_t* prep_payload(senState* data, uint8_t* arr, int key, bool printout){
     float v, r;
     v = 100 * (data->voltage);
     
-    //error bits
+    //error bits (refer to error codes txt file)
     arr[0] = data->err;
 
     Serial.println("");
